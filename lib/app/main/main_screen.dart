@@ -66,8 +66,10 @@ class _MainScreenState extends State<MainScreen> {
                       ),
                     ),
                     TextFormField(
-                      decoration:
-                          const InputDecoration(labelText: 'Seed (optional)'),
+                      decoration: const InputDecoration(
+                        labelText: 'Seed',
+                        hintText: "Random seed used for generation",
+                      ),
                       initialValue: _store.seed?.toString(),
                       keyboardType: TextInputType.number,
                       onSaved: (value) => _store.seed =
@@ -76,24 +78,41 @@ class _MainScreenState extends State<MainScreen> {
                     Observer(
                       builder: (_) => DropdownButtonFormField<ImageSize>(
                         value: _store.size,
-                        decoration:
-                            const InputDecoration(labelText: 'Size Preset'),
+                        decoration: const InputDecoration(labelText: 'Size'),
                         items: _store.sizeDropdownItems,
                         onChanged: (value) => _store.size = value!,
                       ),
                     ),
-                    TextFormField(
-                      decoration: const InputDecoration(labelText: 'Steps'),
-                      initialValue: _store.steps.toString(),
-                      keyboardType: TextInputType.number,
-                      onSaved: (value) => _store.steps = int.parse(value!),
+                    Observer(
+                      builder: (_) => InputDecorator(
+                        decoration: const InputDecoration(labelText: 'Steps'),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Slider(
+                                value: _store.steps.toDouble(),
+                                min: _store.minStep.toDouble(),
+                                max: _store.maxStep.toDouble(),
+                                divisions: _store.stepDivisions,
+                                label: _store.steps.toString(),
+                                onChanged: (value) =>
+                                    _store.steps = value.toInt(),
+                              ),
+                            ),
+                            Text(_store.steps.toString()),
+                          ],
+                        ),
+                      ),
                     ),
                     TextFormField(
-                      decoration: const InputDecoration(labelText: 'Guidance'),
-                      initialValue: _store.guidance.toString(),
+                      decoration: const InputDecoration(
+                        labelText: 'Guidance',
+                        hintText: "Only used by Dev, default to 3.5",
+                      ),
+                      initialValue: _store.guidance?.toString(),
                       keyboardType: TextInputType.number,
                       onSaved: (value) =>
-                          _store.guidance = double.parse(value!),
+                          _store.guidance = double.tryParse(value ?? ""),
                     ),
                     Observer(
                       builder: (_) => DropdownButtonFormField<int?>(

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:mobx/mobx.dart';
 
 import 'generation_config.dart';
@@ -19,13 +20,13 @@ abstract class _GenerationStore with Store {
   @observable
   GenerationConfig config = const GenerationConfig(
     binaryPath: _binaryPath,
-    prompt: "Asian body",
+    prompt: "Asian Boy",
     model: FluxModel.schnell,
     output: "image.png",
     seed: null,
-    size: (1024, 1024),
-    steps: 4,
-    guidance: 3.5,
+    size: ImageSize(1024, 1024),
+    steps: 2,
+    guidance: null,
     quantize: null,
   );
 
@@ -46,46 +47,74 @@ abstract class _GenerationStore with Store {
 
   @computed
   FluxModel get model => config.model;
-  set model(FluxModel value) => config = config.copyWith(model: value);
+  set model(FluxModel value) {
+    config = config.copyWith(model: value);
+
+    switch (value) {
+      case FluxModel.schnell:
+        setStepRange(2, 4);
+      case FluxModel.dev:
+        setStepRange(20, 25);
+    }
+  }
 
   @computed
   int? get seed => config.seed;
   set seed(int? value) => config = config.copyWith(seed: value);
 
   @computed
-  (int, int) get size => config.size;
-  set size((int, int) value) => config = config.copyWith(size: value);
+  ImageSize get size => config.size;
+  set size(ImageSize value) => config = config.copyWith(size: value);
 
   final List<DropdownMenuItem<ImageSize>> sizeDropdownItems = const [
     DropdownMenuItem<ImageSize>(
-      value: (1024, 1024),
+      value: ImageSize(1024, 1024),
       child: Text('1:1'),
     ),
     DropdownMenuItem<ImageSize>(
-      value: (768, 1024),
+      value: ImageSize(1024, 768),
       child: Text('4:3'),
     ),
     DropdownMenuItem<ImageSize>(
-      value: (576, 1024),
+      value: ImageSize(768, 1024),
       child: Text('3:4'),
     ),
     DropdownMenuItem<ImageSize>(
-      value: (1024, 576),
+      value: ImageSize(1024, 576),
       child: Text('16:9'),
     ),
     DropdownMenuItem<ImageSize>(
-      value: (576, 1024),
+      value: ImageSize(576, 1024),
       child: Text('9:16'),
     ),
   ];
 
   @computed
-  int get width => config.size.$1;
-  set width(int value) => config = config.copyWith(size: (value, height));
+  int get width => config.size.width;
+  set width(int value) =>
+      config = config.copyWith(size: config.size.copyWith(width: value));
 
   @computed
-  int get height => config.size.$2;
-  set height(int value) => config = config.copyWith(size: (width, value));
+  int get height => config.size.height;
+  set height(int value) =>
+      config = config.copyWith(size: config.size.copyWith(height: value));
+
+  @observable
+  int minStep = 2;
+
+  @observable
+  int maxStep = 4;
+
+  @action
+  void setStepRange(int min, int max) {
+    minStep = min;
+    if (steps < min) steps = min;
+    maxStep = max;
+    if (steps > max) steps = max;
+  }
+
+  @computed
+  int get stepDivisions => maxStep - minStep;
 
   @computed
   int get steps => config.steps;
@@ -140,7 +169,7 @@ abstract class _GenerationStore with Store {
 
     formKey.currentState!.save();
 
-    config = config.copyWith(output: 'output.png');
+    config = config.copyWith(output: generateFileName());
 
     try {
       final process = await config.start();
@@ -168,5 +197,9 @@ abstract class _GenerationStore with Store {
     } catch (e) {
       status = GenerationStatus.error(e.toString());
     }
+  }
+
+  String generateFileName() {
+    return DateFormat("yMdHms'.png'").format(DateTime.now());
   }
 }

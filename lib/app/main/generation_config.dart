@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:flutter/widgets.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'generation_config.freezed.dart';
@@ -9,7 +8,15 @@ enum FluxModel {
   dev;
 }
 
-typedef ImageSize = (int, int);
+@freezed
+class ImageSize with _$ImageSize {
+  const ImageSize._();
+
+  const factory ImageSize(
+    int width,
+    int height,
+  ) = _ImageSize;
+}
 
 @freezed
 class GenerationConfig with _$GenerationConfig {
@@ -36,8 +43,6 @@ class GenerationConfig with _$GenerationConfig {
   }) = _GenerationConfig;
 
   Future<Process> start() async {
-    final (width, height) = size;
-
     return Process.start(binaryPath, [
       '--prompt',
       prompt,
@@ -50,9 +55,9 @@ class GenerationConfig with _$GenerationConfig {
         seed.toString(),
       ],
       '--width',
-      width.toString(),
+      size.width.toString(),
       '--height',
-      height.toString(),
+      size.height.toString(),
       '--steps',
       steps.toString(),
       if (guidance != null) ...[

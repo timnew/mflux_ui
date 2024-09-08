@@ -28,11 +28,11 @@ mixin _$GenerationStore on _GenerationStore, Store {
   int? get seed => (_$seedComputed ??=
           Computed<int?>(() => super.seed, name: '_GenerationStore.seed'))
       .value;
-  Computed<(int, int)>? _$sizeComputed;
+  Computed<ImageSize>? _$sizeComputed;
 
   @override
-  (int, int) get size => (_$sizeComputed ??=
-          Computed<(int, int)>(() => super.size, name: '_GenerationStore.size'))
+  ImageSize get size => (_$sizeComputed ??=
+          Computed<ImageSize>(() => super.size, name: '_GenerationStore.size'))
       .value;
   Computed<int>? _$widthComputed;
 
@@ -46,6 +46,13 @@ mixin _$GenerationStore on _GenerationStore, Store {
   int get height => (_$heightComputed ??=
           Computed<int>(() => super.height, name: '_GenerationStore.height'))
       .value;
+  Computed<int>? _$stepDivisionsComputed;
+
+  @override
+  int get stepDivisions =>
+      (_$stepDivisionsComputed ??= Computed<int>(() => super.stepDivisions,
+              name: '_GenerationStore.stepDivisions'))
+          .value;
   Computed<int>? _$stepsComputed;
 
   @override
@@ -97,6 +104,38 @@ mixin _$GenerationStore on _GenerationStore, Store {
     });
   }
 
+  late final _$minStepAtom =
+      Atom(name: '_GenerationStore.minStep', context: context);
+
+  @override
+  int get minStep {
+    _$minStepAtom.reportRead();
+    return super.minStep;
+  }
+
+  @override
+  set minStep(int value) {
+    _$minStepAtom.reportWrite(value, super.minStep, () {
+      super.minStep = value;
+    });
+  }
+
+  late final _$maxStepAtom =
+      Atom(name: '_GenerationStore.maxStep', context: context);
+
+  @override
+  int get maxStep {
+    _$maxStepAtom.reportRead();
+    return super.maxStep;
+  }
+
+  @override
+  set maxStep(int value) {
+    _$maxStepAtom.reportWrite(value, super.maxStep, () {
+      super.maxStep = value;
+    });
+  }
+
   late final _$statusAtom =
       Atom(name: '_GenerationStore.status', context: context);
 
@@ -121,10 +160,26 @@ mixin _$GenerationStore on _GenerationStore, Store {
     return _$tryGenerateAsyncAction.run(() => super.tryGenerate());
   }
 
+  late final _$_GenerationStoreActionController =
+      ActionController(name: '_GenerationStore', context: context);
+
+  @override
+  void setStepRange(int min, int max) {
+    final _$actionInfo = _$_GenerationStoreActionController.startAction(
+        name: '_GenerationStore.setStepRange');
+    try {
+      return super.setStepRange(min, max);
+    } finally {
+      _$_GenerationStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''
 config: ${config},
+minStep: ${minStep},
+maxStep: ${maxStep},
 status: ${status},
 prompt: ${prompt},
 model: ${model},
@@ -132,6 +187,7 @@ seed: ${seed},
 size: ${size},
 width: ${width},
 height: ${height},
+stepDivisions: ${stepDivisions},
 steps: ${steps},
 guidance: ${guidance},
 quantize: ${quantize},
