@@ -12,9 +12,6 @@ part 'generation_store.g.dart';
 class GenerationStore = _GenerationStore with _$GenerationStore;
 
 abstract class _GenerationStore with Store {
-  static const _binaryPath =
-      '/Users/timwen/miniconda3/bin/mflux-generate'; // cSpell:disable-line
-
   final formKey = GlobalKey<FormState>();
 
   final binaryPathController = TextEditingController();
@@ -22,7 +19,7 @@ abstract class _GenerationStore with Store {
 
   _GenerationStore() {
     config = const GenerationConfig(
-      binaryPath: _binaryPath,
+      binaryPath: "",
       prompt: "Asian Boy",
       model: FluxModel.schnell,
       output: "image.png",
