@@ -171,6 +171,8 @@ abstract class _GenerationStore with Store {
 
     config = config.copyWith(output: generateFileName());
 
+    await ensureDirectory(config.output);
+
     try {
       final process = await config.start();
 
@@ -200,6 +202,17 @@ abstract class _GenerationStore with Store {
   }
 
   String generateFileName() {
-    return DateFormat("yMdHms'.png'").format(DateTime.now());
+    final series = DateFormat("yMdHms").format(DateTime.now());
+
+    return "output/$series.png";
+  }
+
+  Future<void> ensureDirectory(String path) async {
+    final file = File(path);
+    final directory = file.parent;
+    if (await directory.exists()) {
+      return;
+    }
+    await directory.create();
   }
 }
