@@ -481,8 +481,7 @@ mixin _$MainScreenState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initializing,
-    required TResult Function(int exitCode, String stdout, String stderr)
-        initializationFailed,
+    required TResult Function(String message) initializationFailed,
     required TResult Function() idle,
     required TResult Function() generating,
     required TResult Function(String output) progress,
@@ -493,8 +492,7 @@ mixin _$MainScreenState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initializing,
-    TResult? Function(int exitCode, String stdout, String stderr)?
-        initializationFailed,
+    TResult? Function(String message)? initializationFailed,
     TResult? Function()? idle,
     TResult? Function()? generating,
     TResult? Function(String output)? progress,
@@ -505,8 +503,7 @@ mixin _$MainScreenState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initializing,
-    TResult Function(int exitCode, String stdout, String stderr)?
-        initializationFailed,
+    TResult Function(String message)? initializationFailed,
     TResult Function()? idle,
     TResult Function()? generating,
     TResult Function(String output)? progress,
@@ -614,8 +611,7 @@ class _$InitializingImpl extends _Initializing {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initializing,
-    required TResult Function(int exitCode, String stdout, String stderr)
-        initializationFailed,
+    required TResult Function(String message) initializationFailed,
     required TResult Function() idle,
     required TResult Function() generating,
     required TResult Function(String output) progress,
@@ -629,8 +625,7 @@ class _$InitializingImpl extends _Initializing {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initializing,
-    TResult? Function(int exitCode, String stdout, String stderr)?
-        initializationFailed,
+    TResult? Function(String message)? initializationFailed,
     TResult? Function()? idle,
     TResult? Function()? generating,
     TResult? Function(String output)? progress,
@@ -644,8 +639,7 @@ class _$InitializingImpl extends _Initializing {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initializing,
-    TResult Function(int exitCode, String stdout, String stderr)?
-        initializationFailed,
+    TResult Function(String message)? initializationFailed,
     TResult Function()? idle,
     TResult Function()? generating,
     TResult Function(String output)? progress,
@@ -717,7 +711,7 @@ abstract class _$$InitializationFailedImplCopyWith<$Res> {
           $Res Function(_$InitializationFailedImpl) then) =
       __$$InitializationFailedImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({int exitCode, String stdout, String stderr});
+  $Res call({String message});
 }
 
 /// @nodoc
@@ -733,22 +727,12 @@ class __$$InitializationFailedImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? exitCode = null,
-    Object? stdout = null,
-    Object? stderr = null,
+    Object? message = null,
   }) {
     return _then(_$InitializationFailedImpl(
-      exitCode: null == exitCode
-          ? _value.exitCode
-          : exitCode // ignore: cast_nullable_to_non_nullable
-              as int,
-      stdout: null == stdout
-          ? _value.stdout
-          : stdout // ignore: cast_nullable_to_non_nullable
-              as String,
-      stderr: null == stderr
-          ? _value.stderr
-          : stderr // ignore: cast_nullable_to_non_nullable
+      null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -757,20 +741,14 @@ class __$$InitializationFailedImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$InitializationFailedImpl extends _InitializationFailed {
-  const _$InitializationFailedImpl(
-      {required this.exitCode, required this.stdout, required this.stderr})
-      : super._();
+  const _$InitializationFailedImpl(this.message) : super._();
 
   @override
-  final int exitCode;
-  @override
-  final String stdout;
-  @override
-  final String stderr;
+  final String message;
 
   @override
   String toString() {
-    return 'MainScreenState.initializationFailed(exitCode: $exitCode, stdout: $stdout, stderr: $stderr)';
+    return 'MainScreenState.initializationFailed(message: $message)';
   }
 
   @override
@@ -778,14 +756,11 @@ class _$InitializationFailedImpl extends _InitializationFailed {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$InitializationFailedImpl &&
-            (identical(other.exitCode, exitCode) ||
-                other.exitCode == exitCode) &&
-            (identical(other.stdout, stdout) || other.stdout == stdout) &&
-            (identical(other.stderr, stderr) || other.stderr == stderr));
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, exitCode, stdout, stderr);
+  int get hashCode => Object.hash(runtimeType, message);
 
   /// Create a copy of MainScreenState
   /// with the given fields replaced by the non-null parameter values.
@@ -801,38 +776,35 @@ class _$InitializationFailedImpl extends _InitializationFailed {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initializing,
-    required TResult Function(int exitCode, String stdout, String stderr)
-        initializationFailed,
+    required TResult Function(String message) initializationFailed,
     required TResult Function() idle,
     required TResult Function() generating,
     required TResult Function(String output) progress,
     required TResult Function(String outputFile) success,
     required TResult Function(String message) error,
   }) {
-    return initializationFailed(exitCode, stdout, stderr);
+    return initializationFailed(message);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initializing,
-    TResult? Function(int exitCode, String stdout, String stderr)?
-        initializationFailed,
+    TResult? Function(String message)? initializationFailed,
     TResult? Function()? idle,
     TResult? Function()? generating,
     TResult? Function(String output)? progress,
     TResult? Function(String outputFile)? success,
     TResult? Function(String message)? error,
   }) {
-    return initializationFailed?.call(exitCode, stdout, stderr);
+    return initializationFailed?.call(message);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initializing,
-    TResult Function(int exitCode, String stdout, String stderr)?
-        initializationFailed,
+    TResult Function(String message)? initializationFailed,
     TResult Function()? idle,
     TResult Function()? generating,
     TResult Function(String output)? progress,
@@ -841,7 +813,7 @@ class _$InitializationFailedImpl extends _InitializationFailed {
     required TResult orElse(),
   }) {
     if (initializationFailed != null) {
-      return initializationFailed(exitCode, stdout, stderr);
+      return initializationFailed(message);
     }
     return orElse();
   }
@@ -894,15 +866,11 @@ class _$InitializationFailedImpl extends _InitializationFailed {
 }
 
 abstract class _InitializationFailed extends MainScreenState {
-  const factory _InitializationFailed(
-      {required final int exitCode,
-      required final String stdout,
-      required final String stderr}) = _$InitializationFailedImpl;
+  const factory _InitializationFailed(final String message) =
+      _$InitializationFailedImpl;
   const _InitializationFailed._() : super._();
 
-  int get exitCode;
-  String get stdout;
-  String get stderr;
+  String get message;
 
   /// Create a copy of MainScreenState
   /// with the given fields replaced by the non-null parameter values.
@@ -952,8 +920,7 @@ class _$IdleImpl extends _Idle {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initializing,
-    required TResult Function(int exitCode, String stdout, String stderr)
-        initializationFailed,
+    required TResult Function(String message) initializationFailed,
     required TResult Function() idle,
     required TResult Function() generating,
     required TResult Function(String output) progress,
@@ -967,8 +934,7 @@ class _$IdleImpl extends _Idle {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initializing,
-    TResult? Function(int exitCode, String stdout, String stderr)?
-        initializationFailed,
+    TResult? Function(String message)? initializationFailed,
     TResult? Function()? idle,
     TResult? Function()? generating,
     TResult? Function(String output)? progress,
@@ -982,8 +948,7 @@ class _$IdleImpl extends _Idle {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initializing,
-    TResult Function(int exitCode, String stdout, String stderr)?
-        initializationFailed,
+    TResult Function(String message)? initializationFailed,
     TResult Function()? idle,
     TResult Function()? generating,
     TResult Function(String output)? progress,
@@ -1091,8 +1056,7 @@ class _$GeneratingImpl extends _Generating {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initializing,
-    required TResult Function(int exitCode, String stdout, String stderr)
-        initializationFailed,
+    required TResult Function(String message) initializationFailed,
     required TResult Function() idle,
     required TResult Function() generating,
     required TResult Function(String output) progress,
@@ -1106,8 +1070,7 @@ class _$GeneratingImpl extends _Generating {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initializing,
-    TResult? Function(int exitCode, String stdout, String stderr)?
-        initializationFailed,
+    TResult? Function(String message)? initializationFailed,
     TResult? Function()? idle,
     TResult? Function()? generating,
     TResult? Function(String output)? progress,
@@ -1121,8 +1084,7 @@ class _$GeneratingImpl extends _Generating {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initializing,
-    TResult Function(int exitCode, String stdout, String stderr)?
-        initializationFailed,
+    TResult Function(String message)? initializationFailed,
     TResult Function()? idle,
     TResult Function()? generating,
     TResult Function(String output)? progress,
@@ -1257,8 +1219,7 @@ class _$ProgressImpl extends _Progress {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initializing,
-    required TResult Function(int exitCode, String stdout, String stderr)
-        initializationFailed,
+    required TResult Function(String message) initializationFailed,
     required TResult Function() idle,
     required TResult Function() generating,
     required TResult Function(String output) progress,
@@ -1272,8 +1233,7 @@ class _$ProgressImpl extends _Progress {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initializing,
-    TResult? Function(int exitCode, String stdout, String stderr)?
-        initializationFailed,
+    TResult? Function(String message)? initializationFailed,
     TResult? Function()? idle,
     TResult? Function()? generating,
     TResult? Function(String output)? progress,
@@ -1287,8 +1247,7 @@ class _$ProgressImpl extends _Progress {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initializing,
-    TResult Function(int exitCode, String stdout, String stderr)?
-        initializationFailed,
+    TResult Function(String message)? initializationFailed,
     TResult Function()? idle,
     TResult Function()? generating,
     TResult Function(String output)? progress,
@@ -1432,8 +1391,7 @@ class _$SuccessImpl extends _Success {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initializing,
-    required TResult Function(int exitCode, String stdout, String stderr)
-        initializationFailed,
+    required TResult Function(String message) initializationFailed,
     required TResult Function() idle,
     required TResult Function() generating,
     required TResult Function(String output) progress,
@@ -1447,8 +1405,7 @@ class _$SuccessImpl extends _Success {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initializing,
-    TResult? Function(int exitCode, String stdout, String stderr)?
-        initializationFailed,
+    TResult? Function(String message)? initializationFailed,
     TResult? Function()? idle,
     TResult? Function()? generating,
     TResult? Function(String output)? progress,
@@ -1462,8 +1419,7 @@ class _$SuccessImpl extends _Success {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initializing,
-    TResult Function(int exitCode, String stdout, String stderr)?
-        initializationFailed,
+    TResult Function(String message)? initializationFailed,
     TResult Function()? idle,
     TResult Function()? generating,
     TResult Function(String output)? progress,
@@ -1606,8 +1562,7 @@ class _$ErrorImpl extends _Error {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initializing,
-    required TResult Function(int exitCode, String stdout, String stderr)
-        initializationFailed,
+    required TResult Function(String message) initializationFailed,
     required TResult Function() idle,
     required TResult Function() generating,
     required TResult Function(String output) progress,
@@ -1621,8 +1576,7 @@ class _$ErrorImpl extends _Error {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initializing,
-    TResult? Function(int exitCode, String stdout, String stderr)?
-        initializationFailed,
+    TResult? Function(String message)? initializationFailed,
     TResult? Function()? idle,
     TResult? Function()? generating,
     TResult? Function(String output)? progress,
@@ -1636,8 +1590,7 @@ class _$ErrorImpl extends _Error {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initializing,
-    TResult Function(int exitCode, String stdout, String stderr)?
-        initializationFailed,
+    TResult Function(String message)? initializationFailed,
     TResult Function()? idle,
     TResult Function()? generating,
     TResult Function(String output)? progress,

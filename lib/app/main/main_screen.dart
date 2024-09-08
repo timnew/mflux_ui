@@ -50,11 +50,8 @@ class _MainScreenState extends State<MainScreen> {
             child: Observer(
               builder: (context) => _store.state.maybeWhen(
                 initializing: () => const _InitializingPanel(),
-                initializationFailed: (exitCode, stdout, stderr) =>
-                    _InitializationFailedPanel(
-                  exitCode: exitCode,
-                  stdout: stdout,
-                  stderr: stderr,
+                initializationFailed: (message) => _InitializationFailedPanel(
+                  message: message,
                 ),
                 orElse: () => Row(
                   children: [
@@ -94,14 +91,10 @@ class _InitializingPanel extends StatelessWidget {
 }
 
 class _InitializationFailedPanel extends StatelessWidget {
-  final int exitCode;
-  final String stdout;
-  final String stderr;
+  final String message;
 
   const _InitializationFailedPanel({
-    required this.exitCode,
-    required this.stdout,
-    required this.stderr,
+    required this.message,
   });
 
   @override
@@ -109,19 +102,19 @@ class _InitializationFailedPanel extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text("Initialization failed"),
-            if (exitCode != 0) ...[
+            const Text("Failed to locate mflux-generate binary"),
+            if (message.isNotEmpty) ...[
               const Gap(16),
-              Text("Error code: $exitCode"),
+              Text(message),
             ],
-            if (stderr.isNotEmpty) ...[
-              const Gap(16),
-              Text(stderr),
-            ],
-            if (stdout.isNotEmpty) ...[
-              const Gap(16),
-              Text(stdout),
-            ],
+            const Gap(32),
+            TextField(
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Manual Set mflux-generate Path',
+              ),
+              controller: context.read<GenerationStore>().binaryPathController,
+            ),
             const Gap(32),
             TextButton(
               onPressed: () => context.read<GenerationStore>().locateBinary(),

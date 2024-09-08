@@ -238,26 +238,58 @@ abstract class _GenerationStore with Store {
   Future<void> locateBinary() async {
     state = const MainScreenState.initializing();
 
-    final process =
-        await Process.run("which", ["mflux-generate"], runInShell: true);
+    if (binaryPathController.text.isNotEmpty) {
+      final binaryPath = binaryPathController.text.trim();
 
-    print(process.exitCode);
-    print(process.stdout);
-    print(process.stderr);
+      if (await verifyBinaryLocation(binaryPath)) {
+        return;
+      } else {
+        binaryPathController.text = "";
+        return;
+      }
+    }
+
+    final process = await Process.run(
+      "which",
+      ["mflux-generate"],
+      runInShell: true,
+    );
+
+    if (process.exitCode != 0) {
+      state = MainScreenState.initializationFailed(
+        "Failed to locate mflux-generate: Code ${process.exitCode}\n${process.stderr}\n${process.stdout}",
+      );
+      return;
+    }
 
     final binaryPath = process.stdout.toString().trim();
+    await verifyBinaryLocation(binaryPath);
+  }
 
+  @action
+  Future<bool> verifyBinaryLocation(String binaryPath) async {
     final file = File(binaryPath);
 
-    if (await file.exists()) {
-      this.binaryPath = binaryPath;
-      state = const MainScreenState.idle();
-    } else {
+    if (!await file.exists()) {
       state = MainScreenState.initializationFailed(
-        exitCode: process.exitCode,
-        stdout: process.stdout.toString(),
-        stderr: process.stderr.toString(),
+        "Binary $binaryPath not found",
       );
+      return false;
     }
+
+    final stat = await file.stat();
+    final canReadAndExecute = ((stat.mode >> 6) & 0x7 & 0x5) > 0;
+
+    if (!canReadAndExecute) {
+      state = MainScreenState.initializationFailed(
+        "$binaryPath is not executable",
+      );
+      return false;
+    }
+
+    this.binaryPath = binaryPath;
+    state = const MainScreenState.idle();
+
+    return true;
   }
 }

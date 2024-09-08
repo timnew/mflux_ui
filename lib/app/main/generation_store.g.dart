@@ -172,6 +172,15 @@ mixin _$GenerationStore on _GenerationStore, Store {
     return _$locateBinaryAsyncAction.run(() => super.locateBinary());
   }
 
+  late final _$verifyBinaryLocationAsyncAction =
+      AsyncAction('_GenerationStore.verifyBinaryLocation', context: context);
+
+  @override
+  Future<bool> verifyBinaryLocation(String binaryPath) {
+    return _$verifyBinaryLocationAsyncAction
+        .run(() => super.verifyBinaryLocation(binaryPath));
+  }
+
   late final _$_GenerationStoreActionController =
       ActionController(name: '_GenerationStore', context: context);
 
