@@ -97,10 +97,14 @@ mixin _$GenerationStore on _GenerationStore, Store {
     return super.config;
   }
 
+  bool _configIsInitialized = false;
+
   @override
   set config(GenerationConfig value) {
-    _$configAtom.reportWrite(value, super.config, () {
+    _$configAtom.reportWrite(value, _configIsInitialized ? super.config : null,
+        () {
       super.config = value;
+      _configIsInitialized = true;
     });
   }
 
@@ -136,19 +140,19 @@ mixin _$GenerationStore on _GenerationStore, Store {
     });
   }
 
-  late final _$statusAtom =
-      Atom(name: '_GenerationStore.status', context: context);
+  late final _$stateAtom =
+      Atom(name: '_GenerationStore.state', context: context);
 
   @override
-  GenerationStatus get status {
-    _$statusAtom.reportRead();
-    return super.status;
+  MainScreenState get state {
+    _$stateAtom.reportRead();
+    return super.state;
   }
 
   @override
-  set status(GenerationStatus value) {
-    _$statusAtom.reportWrite(value, super.status, () {
-      super.status = value;
+  set state(MainScreenState value) {
+    _$stateAtom.reportWrite(value, super.state, () {
+      super.state = value;
     });
   }
 
@@ -158,6 +162,14 @@ mixin _$GenerationStore on _GenerationStore, Store {
   @override
   Future<void> tryGenerate() {
     return _$tryGenerateAsyncAction.run(() => super.tryGenerate());
+  }
+
+  late final _$locateBinaryAsyncAction =
+      AsyncAction('_GenerationStore.locateBinary', context: context);
+
+  @override
+  Future<void> locateBinary() {
+    return _$locateBinaryAsyncAction.run(() => super.locateBinary());
   }
 
   late final _$_GenerationStoreActionController =
@@ -180,7 +192,7 @@ mixin _$GenerationStore on _GenerationStore, Store {
 config: ${config},
 minStep: ${minStep},
 maxStep: ${maxStep},
-status: ${status},
+state: ${state},
 prompt: ${prompt},
 model: ${model},
 seed: ${seed},

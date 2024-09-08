@@ -477,9 +477,12 @@ abstract class _GenerationConfig extends GenerationConfig {
 }
 
 /// @nodoc
-mixin _$GenerationStatus {
+mixin _$MainScreenState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function() initializing,
+    required TResult Function(int exitCode, String stdout, String stderr)
+        initializationFailed,
     required TResult Function() idle,
     required TResult Function() generating,
     required TResult Function(String output) progress,
@@ -489,6 +492,9 @@ mixin _$GenerationStatus {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initializing,
+    TResult? Function(int exitCode, String stdout, String stderr)?
+        initializationFailed,
     TResult? Function()? idle,
     TResult? Function()? generating,
     TResult? Function(String output)? progress,
@@ -498,6 +504,9 @@ mixin _$GenerationStatus {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initializing,
+    TResult Function(int exitCode, String stdout, String stderr)?
+        initializationFailed,
     TResult Function()? idle,
     TResult Function()? generating,
     TResult Function(String output)? progress,
@@ -508,6 +517,8 @@ mixin _$GenerationStatus {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_Initializing value) initializing,
+    required TResult Function(_InitializationFailed value) initializationFailed,
     required TResult Function(_Idle value) idle,
     required TResult Function(_Generating value) generating,
     required TResult Function(_Progress value) progress,
@@ -517,6 +528,8 @@ mixin _$GenerationStatus {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initializing value)? initializing,
+    TResult? Function(_InitializationFailed value)? initializationFailed,
     TResult? Function(_Idle value)? idle,
     TResult? Function(_Generating value)? generating,
     TResult? Function(_Progress value)? progress,
@@ -526,6 +539,8 @@ mixin _$GenerationStatus {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initializing value)? initializing,
+    TResult Function(_InitializationFailed value)? initializationFailed,
     TResult Function(_Idle value)? idle,
     TResult Function(_Generating value)? generating,
     TResult Function(_Progress value)? progress,
@@ -537,24 +552,363 @@ mixin _$GenerationStatus {
 }
 
 /// @nodoc
-abstract class $GenerationStatusCopyWith<$Res> {
-  factory $GenerationStatusCopyWith(
-          GenerationStatus value, $Res Function(GenerationStatus) then) =
-      _$GenerationStatusCopyWithImpl<$Res, GenerationStatus>;
+abstract class $MainScreenStateCopyWith<$Res> {
+  factory $MainScreenStateCopyWith(
+          MainScreenState value, $Res Function(MainScreenState) then) =
+      _$MainScreenStateCopyWithImpl<$Res, MainScreenState>;
 }
 
 /// @nodoc
-class _$GenerationStatusCopyWithImpl<$Res, $Val extends GenerationStatus>
-    implements $GenerationStatusCopyWith<$Res> {
-  _$GenerationStatusCopyWithImpl(this._value, this._then);
+class _$MainScreenStateCopyWithImpl<$Res, $Val extends MainScreenState>
+    implements $MainScreenStateCopyWith<$Res> {
+  _$MainScreenStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of GenerationStatus
+  /// Create a copy of MainScreenState
   /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+abstract class _$$InitializingImplCopyWith<$Res> {
+  factory _$$InitializingImplCopyWith(
+          _$InitializingImpl value, $Res Function(_$InitializingImpl) then) =
+      __$$InitializingImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$InitializingImplCopyWithImpl<$Res>
+    extends _$MainScreenStateCopyWithImpl<$Res, _$InitializingImpl>
+    implements _$$InitializingImplCopyWith<$Res> {
+  __$$InitializingImplCopyWithImpl(
+      _$InitializingImpl _value, $Res Function(_$InitializingImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of MainScreenState
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$InitializingImpl extends _Initializing {
+  const _$InitializingImpl() : super._();
+
+  @override
+  String toString() {
+    return 'MainScreenState.initializing()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$InitializingImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initializing,
+    required TResult Function(int exitCode, String stdout, String stderr)
+        initializationFailed,
+    required TResult Function() idle,
+    required TResult Function() generating,
+    required TResult Function(String output) progress,
+    required TResult Function(String outputFile) success,
+    required TResult Function(String message) error,
+  }) {
+    return initializing();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initializing,
+    TResult? Function(int exitCode, String stdout, String stderr)?
+        initializationFailed,
+    TResult? Function()? idle,
+    TResult? Function()? generating,
+    TResult? Function(String output)? progress,
+    TResult? Function(String outputFile)? success,
+    TResult? Function(String message)? error,
+  }) {
+    return initializing?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initializing,
+    TResult Function(int exitCode, String stdout, String stderr)?
+        initializationFailed,
+    TResult Function()? idle,
+    TResult Function()? generating,
+    TResult Function(String output)? progress,
+    TResult Function(String outputFile)? success,
+    TResult Function(String message)? error,
+    required TResult orElse(),
+  }) {
+    if (initializing != null) {
+      return initializing();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initializing value) initializing,
+    required TResult Function(_InitializationFailed value) initializationFailed,
+    required TResult Function(_Idle value) idle,
+    required TResult Function(_Generating value) generating,
+    required TResult Function(_Progress value) progress,
+    required TResult Function(_Success value) success,
+    required TResult Function(_Error value) error,
+  }) {
+    return initializing(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initializing value)? initializing,
+    TResult? Function(_InitializationFailed value)? initializationFailed,
+    TResult? Function(_Idle value)? idle,
+    TResult? Function(_Generating value)? generating,
+    TResult? Function(_Progress value)? progress,
+    TResult? Function(_Success value)? success,
+    TResult? Function(_Error value)? error,
+  }) {
+    return initializing?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initializing value)? initializing,
+    TResult Function(_InitializationFailed value)? initializationFailed,
+    TResult Function(_Idle value)? idle,
+    TResult Function(_Generating value)? generating,
+    TResult Function(_Progress value)? progress,
+    TResult Function(_Success value)? success,
+    TResult Function(_Error value)? error,
+    required TResult orElse(),
+  }) {
+    if (initializing != null) {
+      return initializing(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Initializing extends MainScreenState {
+  const factory _Initializing() = _$InitializingImpl;
+  const _Initializing._() : super._();
+}
+
+/// @nodoc
+abstract class _$$InitializationFailedImplCopyWith<$Res> {
+  factory _$$InitializationFailedImplCopyWith(_$InitializationFailedImpl value,
+          $Res Function(_$InitializationFailedImpl) then) =
+      __$$InitializationFailedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({int exitCode, String stdout, String stderr});
+}
+
+/// @nodoc
+class __$$InitializationFailedImplCopyWithImpl<$Res>
+    extends _$MainScreenStateCopyWithImpl<$Res, _$InitializationFailedImpl>
+    implements _$$InitializationFailedImplCopyWith<$Res> {
+  __$$InitializationFailedImplCopyWithImpl(_$InitializationFailedImpl _value,
+      $Res Function(_$InitializationFailedImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of MainScreenState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? exitCode = null,
+    Object? stdout = null,
+    Object? stderr = null,
+  }) {
+    return _then(_$InitializationFailedImpl(
+      exitCode: null == exitCode
+          ? _value.exitCode
+          : exitCode // ignore: cast_nullable_to_non_nullable
+              as int,
+      stdout: null == stdout
+          ? _value.stdout
+          : stdout // ignore: cast_nullable_to_non_nullable
+              as String,
+      stderr: null == stderr
+          ? _value.stderr
+          : stderr // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$InitializationFailedImpl extends _InitializationFailed {
+  const _$InitializationFailedImpl(
+      {required this.exitCode, required this.stdout, required this.stderr})
+      : super._();
+
+  @override
+  final int exitCode;
+  @override
+  final String stdout;
+  @override
+  final String stderr;
+
+  @override
+  String toString() {
+    return 'MainScreenState.initializationFailed(exitCode: $exitCode, stdout: $stdout, stderr: $stderr)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$InitializationFailedImpl &&
+            (identical(other.exitCode, exitCode) ||
+                other.exitCode == exitCode) &&
+            (identical(other.stdout, stdout) || other.stdout == stdout) &&
+            (identical(other.stderr, stderr) || other.stderr == stderr));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, exitCode, stdout, stderr);
+
+  /// Create a copy of MainScreenState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$InitializationFailedImplCopyWith<_$InitializationFailedImpl>
+      get copyWith =>
+          __$$InitializationFailedImplCopyWithImpl<_$InitializationFailedImpl>(
+              this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initializing,
+    required TResult Function(int exitCode, String stdout, String stderr)
+        initializationFailed,
+    required TResult Function() idle,
+    required TResult Function() generating,
+    required TResult Function(String output) progress,
+    required TResult Function(String outputFile) success,
+    required TResult Function(String message) error,
+  }) {
+    return initializationFailed(exitCode, stdout, stderr);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initializing,
+    TResult? Function(int exitCode, String stdout, String stderr)?
+        initializationFailed,
+    TResult? Function()? idle,
+    TResult? Function()? generating,
+    TResult? Function(String output)? progress,
+    TResult? Function(String outputFile)? success,
+    TResult? Function(String message)? error,
+  }) {
+    return initializationFailed?.call(exitCode, stdout, stderr);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initializing,
+    TResult Function(int exitCode, String stdout, String stderr)?
+        initializationFailed,
+    TResult Function()? idle,
+    TResult Function()? generating,
+    TResult Function(String output)? progress,
+    TResult Function(String outputFile)? success,
+    TResult Function(String message)? error,
+    required TResult orElse(),
+  }) {
+    if (initializationFailed != null) {
+      return initializationFailed(exitCode, stdout, stderr);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initializing value) initializing,
+    required TResult Function(_InitializationFailed value) initializationFailed,
+    required TResult Function(_Idle value) idle,
+    required TResult Function(_Generating value) generating,
+    required TResult Function(_Progress value) progress,
+    required TResult Function(_Success value) success,
+    required TResult Function(_Error value) error,
+  }) {
+    return initializationFailed(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initializing value)? initializing,
+    TResult? Function(_InitializationFailed value)? initializationFailed,
+    TResult? Function(_Idle value)? idle,
+    TResult? Function(_Generating value)? generating,
+    TResult? Function(_Progress value)? progress,
+    TResult? Function(_Success value)? success,
+    TResult? Function(_Error value)? error,
+  }) {
+    return initializationFailed?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initializing value)? initializing,
+    TResult Function(_InitializationFailed value)? initializationFailed,
+    TResult Function(_Idle value)? idle,
+    TResult Function(_Generating value)? generating,
+    TResult Function(_Progress value)? progress,
+    TResult Function(_Success value)? success,
+    TResult Function(_Error value)? error,
+    required TResult orElse(),
+  }) {
+    if (initializationFailed != null) {
+      return initializationFailed(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _InitializationFailed extends MainScreenState {
+  const factory _InitializationFailed(
+      {required final int exitCode,
+      required final String stdout,
+      required final String stderr}) = _$InitializationFailedImpl;
+  const _InitializationFailed._() : super._();
+
+  int get exitCode;
+  String get stdout;
+  String get stderr;
+
+  /// Create a copy of MainScreenState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$InitializationFailedImplCopyWith<_$InitializationFailedImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -566,12 +920,12 @@ abstract class _$$IdleImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$IdleImplCopyWithImpl<$Res>
-    extends _$GenerationStatusCopyWithImpl<$Res, _$IdleImpl>
+    extends _$MainScreenStateCopyWithImpl<$Res, _$IdleImpl>
     implements _$$IdleImplCopyWith<$Res> {
   __$$IdleImplCopyWithImpl(_$IdleImpl _value, $Res Function(_$IdleImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of GenerationStatus
+  /// Create a copy of MainScreenState
   /// with the given fields replaced by the non-null parameter values.
 }
 
@@ -582,7 +936,7 @@ class _$IdleImpl extends _Idle {
 
   @override
   String toString() {
-    return 'GenerationStatus.idle()';
+    return 'MainScreenState.idle()';
   }
 
   @override
@@ -597,6 +951,9 @@ class _$IdleImpl extends _Idle {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function() initializing,
+    required TResult Function(int exitCode, String stdout, String stderr)
+        initializationFailed,
     required TResult Function() idle,
     required TResult Function() generating,
     required TResult Function(String output) progress,
@@ -609,6 +966,9 @@ class _$IdleImpl extends _Idle {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initializing,
+    TResult? Function(int exitCode, String stdout, String stderr)?
+        initializationFailed,
     TResult? Function()? idle,
     TResult? Function()? generating,
     TResult? Function(String output)? progress,
@@ -621,6 +981,9 @@ class _$IdleImpl extends _Idle {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initializing,
+    TResult Function(int exitCode, String stdout, String stderr)?
+        initializationFailed,
     TResult Function()? idle,
     TResult Function()? generating,
     TResult Function(String output)? progress,
@@ -637,6 +1000,8 @@ class _$IdleImpl extends _Idle {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_Initializing value) initializing,
+    required TResult Function(_InitializationFailed value) initializationFailed,
     required TResult Function(_Idle value) idle,
     required TResult Function(_Generating value) generating,
     required TResult Function(_Progress value) progress,
@@ -649,6 +1014,8 @@ class _$IdleImpl extends _Idle {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initializing value)? initializing,
+    TResult? Function(_InitializationFailed value)? initializationFailed,
     TResult? Function(_Idle value)? idle,
     TResult? Function(_Generating value)? generating,
     TResult? Function(_Progress value)? progress,
@@ -661,6 +1028,8 @@ class _$IdleImpl extends _Idle {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initializing value)? initializing,
+    TResult Function(_InitializationFailed value)? initializationFailed,
     TResult Function(_Idle value)? idle,
     TResult Function(_Generating value)? generating,
     TResult Function(_Progress value)? progress,
@@ -675,7 +1044,7 @@ class _$IdleImpl extends _Idle {
   }
 }
 
-abstract class _Idle extends GenerationStatus {
+abstract class _Idle extends MainScreenState {
   const factory _Idle() = _$IdleImpl;
   const _Idle._() : super._();
 }
@@ -689,13 +1058,13 @@ abstract class _$$GeneratingImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$GeneratingImplCopyWithImpl<$Res>
-    extends _$GenerationStatusCopyWithImpl<$Res, _$GeneratingImpl>
+    extends _$MainScreenStateCopyWithImpl<$Res, _$GeneratingImpl>
     implements _$$GeneratingImplCopyWith<$Res> {
   __$$GeneratingImplCopyWithImpl(
       _$GeneratingImpl _value, $Res Function(_$GeneratingImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of GenerationStatus
+  /// Create a copy of MainScreenState
   /// with the given fields replaced by the non-null parameter values.
 }
 
@@ -706,7 +1075,7 @@ class _$GeneratingImpl extends _Generating {
 
   @override
   String toString() {
-    return 'GenerationStatus.generating()';
+    return 'MainScreenState.generating()';
   }
 
   @override
@@ -721,6 +1090,9 @@ class _$GeneratingImpl extends _Generating {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function() initializing,
+    required TResult Function(int exitCode, String stdout, String stderr)
+        initializationFailed,
     required TResult Function() idle,
     required TResult Function() generating,
     required TResult Function(String output) progress,
@@ -733,6 +1105,9 @@ class _$GeneratingImpl extends _Generating {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initializing,
+    TResult? Function(int exitCode, String stdout, String stderr)?
+        initializationFailed,
     TResult? Function()? idle,
     TResult? Function()? generating,
     TResult? Function(String output)? progress,
@@ -745,6 +1120,9 @@ class _$GeneratingImpl extends _Generating {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initializing,
+    TResult Function(int exitCode, String stdout, String stderr)?
+        initializationFailed,
     TResult Function()? idle,
     TResult Function()? generating,
     TResult Function(String output)? progress,
@@ -761,6 +1139,8 @@ class _$GeneratingImpl extends _Generating {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_Initializing value) initializing,
+    required TResult Function(_InitializationFailed value) initializationFailed,
     required TResult Function(_Idle value) idle,
     required TResult Function(_Generating value) generating,
     required TResult Function(_Progress value) progress,
@@ -773,6 +1153,8 @@ class _$GeneratingImpl extends _Generating {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initializing value)? initializing,
+    TResult? Function(_InitializationFailed value)? initializationFailed,
     TResult? Function(_Idle value)? idle,
     TResult? Function(_Generating value)? generating,
     TResult? Function(_Progress value)? progress,
@@ -785,6 +1167,8 @@ class _$GeneratingImpl extends _Generating {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initializing value)? initializing,
+    TResult Function(_InitializationFailed value)? initializationFailed,
     TResult Function(_Idle value)? idle,
     TResult Function(_Generating value)? generating,
     TResult Function(_Progress value)? progress,
@@ -799,7 +1183,7 @@ class _$GeneratingImpl extends _Generating {
   }
 }
 
-abstract class _Generating extends GenerationStatus {
+abstract class _Generating extends MainScreenState {
   const factory _Generating() = _$GeneratingImpl;
   const _Generating._() : super._();
 }
@@ -815,13 +1199,13 @@ abstract class _$$ProgressImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$ProgressImplCopyWithImpl<$Res>
-    extends _$GenerationStatusCopyWithImpl<$Res, _$ProgressImpl>
+    extends _$MainScreenStateCopyWithImpl<$Res, _$ProgressImpl>
     implements _$$ProgressImplCopyWith<$Res> {
   __$$ProgressImplCopyWithImpl(
       _$ProgressImpl _value, $Res Function(_$ProgressImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of GenerationStatus
+  /// Create a copy of MainScreenState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -847,7 +1231,7 @@ class _$ProgressImpl extends _Progress {
 
   @override
   String toString() {
-    return 'GenerationStatus.progress(output: $output)';
+    return 'MainScreenState.progress(output: $output)';
   }
 
   @override
@@ -861,7 +1245,7 @@ class _$ProgressImpl extends _Progress {
   @override
   int get hashCode => Object.hash(runtimeType, output);
 
-  /// Create a copy of GenerationStatus
+  /// Create a copy of MainScreenState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
@@ -872,6 +1256,9 @@ class _$ProgressImpl extends _Progress {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function() initializing,
+    required TResult Function(int exitCode, String stdout, String stderr)
+        initializationFailed,
     required TResult Function() idle,
     required TResult Function() generating,
     required TResult Function(String output) progress,
@@ -884,6 +1271,9 @@ class _$ProgressImpl extends _Progress {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initializing,
+    TResult? Function(int exitCode, String stdout, String stderr)?
+        initializationFailed,
     TResult? Function()? idle,
     TResult? Function()? generating,
     TResult? Function(String output)? progress,
@@ -896,6 +1286,9 @@ class _$ProgressImpl extends _Progress {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initializing,
+    TResult Function(int exitCode, String stdout, String stderr)?
+        initializationFailed,
     TResult Function()? idle,
     TResult Function()? generating,
     TResult Function(String output)? progress,
@@ -912,6 +1305,8 @@ class _$ProgressImpl extends _Progress {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_Initializing value) initializing,
+    required TResult Function(_InitializationFailed value) initializationFailed,
     required TResult Function(_Idle value) idle,
     required TResult Function(_Generating value) generating,
     required TResult Function(_Progress value) progress,
@@ -924,6 +1319,8 @@ class _$ProgressImpl extends _Progress {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initializing value)? initializing,
+    TResult? Function(_InitializationFailed value)? initializationFailed,
     TResult? Function(_Idle value)? idle,
     TResult? Function(_Generating value)? generating,
     TResult? Function(_Progress value)? progress,
@@ -936,6 +1333,8 @@ class _$ProgressImpl extends _Progress {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initializing value)? initializing,
+    TResult Function(_InitializationFailed value)? initializationFailed,
     TResult Function(_Idle value)? idle,
     TResult Function(_Generating value)? generating,
     TResult Function(_Progress value)? progress,
@@ -950,13 +1349,13 @@ class _$ProgressImpl extends _Progress {
   }
 }
 
-abstract class _Progress extends GenerationStatus {
+abstract class _Progress extends MainScreenState {
   const factory _Progress(final String output) = _$ProgressImpl;
   const _Progress._() : super._();
 
   String get output;
 
-  /// Create a copy of GenerationStatus
+  /// Create a copy of MainScreenState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ProgressImplCopyWith<_$ProgressImpl> get copyWith =>
@@ -974,13 +1373,13 @@ abstract class _$$SuccessImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$SuccessImplCopyWithImpl<$Res>
-    extends _$GenerationStatusCopyWithImpl<$Res, _$SuccessImpl>
+    extends _$MainScreenStateCopyWithImpl<$Res, _$SuccessImpl>
     implements _$$SuccessImplCopyWith<$Res> {
   __$$SuccessImplCopyWithImpl(
       _$SuccessImpl _value, $Res Function(_$SuccessImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of GenerationStatus
+  /// Create a copy of MainScreenState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -1006,7 +1405,7 @@ class _$SuccessImpl extends _Success {
 
   @override
   String toString() {
-    return 'GenerationStatus.success(outputFile: $outputFile)';
+    return 'MainScreenState.success(outputFile: $outputFile)';
   }
 
   @override
@@ -1021,7 +1420,7 @@ class _$SuccessImpl extends _Success {
   @override
   int get hashCode => Object.hash(runtimeType, outputFile);
 
-  /// Create a copy of GenerationStatus
+  /// Create a copy of MainScreenState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
@@ -1032,6 +1431,9 @@ class _$SuccessImpl extends _Success {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function() initializing,
+    required TResult Function(int exitCode, String stdout, String stderr)
+        initializationFailed,
     required TResult Function() idle,
     required TResult Function() generating,
     required TResult Function(String output) progress,
@@ -1044,6 +1446,9 @@ class _$SuccessImpl extends _Success {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initializing,
+    TResult? Function(int exitCode, String stdout, String stderr)?
+        initializationFailed,
     TResult? Function()? idle,
     TResult? Function()? generating,
     TResult? Function(String output)? progress,
@@ -1056,6 +1461,9 @@ class _$SuccessImpl extends _Success {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initializing,
+    TResult Function(int exitCode, String stdout, String stderr)?
+        initializationFailed,
     TResult Function()? idle,
     TResult Function()? generating,
     TResult Function(String output)? progress,
@@ -1072,6 +1480,8 @@ class _$SuccessImpl extends _Success {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_Initializing value) initializing,
+    required TResult Function(_InitializationFailed value) initializationFailed,
     required TResult Function(_Idle value) idle,
     required TResult Function(_Generating value) generating,
     required TResult Function(_Progress value) progress,
@@ -1084,6 +1494,8 @@ class _$SuccessImpl extends _Success {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initializing value)? initializing,
+    TResult? Function(_InitializationFailed value)? initializationFailed,
     TResult? Function(_Idle value)? idle,
     TResult? Function(_Generating value)? generating,
     TResult? Function(_Progress value)? progress,
@@ -1096,6 +1508,8 @@ class _$SuccessImpl extends _Success {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initializing value)? initializing,
+    TResult Function(_InitializationFailed value)? initializationFailed,
     TResult Function(_Idle value)? idle,
     TResult Function(_Generating value)? generating,
     TResult Function(_Progress value)? progress,
@@ -1110,13 +1524,13 @@ class _$SuccessImpl extends _Success {
   }
 }
 
-abstract class _Success extends GenerationStatus {
+abstract class _Success extends MainScreenState {
   const factory _Success(final String outputFile) = _$SuccessImpl;
   const _Success._() : super._();
 
   String get outputFile;
 
-  /// Create a copy of GenerationStatus
+  /// Create a copy of MainScreenState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith =>
@@ -1134,13 +1548,13 @@ abstract class _$$ErrorImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$ErrorImplCopyWithImpl<$Res>
-    extends _$GenerationStatusCopyWithImpl<$Res, _$ErrorImpl>
+    extends _$MainScreenStateCopyWithImpl<$Res, _$ErrorImpl>
     implements _$$ErrorImplCopyWith<$Res> {
   __$$ErrorImplCopyWithImpl(
       _$ErrorImpl _value, $Res Function(_$ErrorImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of GenerationStatus
+  /// Create a copy of MainScreenState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -1166,7 +1580,7 @@ class _$ErrorImpl extends _Error {
 
   @override
   String toString() {
-    return 'GenerationStatus.error(message: $message)';
+    return 'MainScreenState.error(message: $message)';
   }
 
   @override
@@ -1180,7 +1594,7 @@ class _$ErrorImpl extends _Error {
   @override
   int get hashCode => Object.hash(runtimeType, message);
 
-  /// Create a copy of GenerationStatus
+  /// Create a copy of MainScreenState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
@@ -1191,6 +1605,9 @@ class _$ErrorImpl extends _Error {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function() initializing,
+    required TResult Function(int exitCode, String stdout, String stderr)
+        initializationFailed,
     required TResult Function() idle,
     required TResult Function() generating,
     required TResult Function(String output) progress,
@@ -1203,6 +1620,9 @@ class _$ErrorImpl extends _Error {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initializing,
+    TResult? Function(int exitCode, String stdout, String stderr)?
+        initializationFailed,
     TResult? Function()? idle,
     TResult? Function()? generating,
     TResult? Function(String output)? progress,
@@ -1215,6 +1635,9 @@ class _$ErrorImpl extends _Error {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initializing,
+    TResult Function(int exitCode, String stdout, String stderr)?
+        initializationFailed,
     TResult Function()? idle,
     TResult Function()? generating,
     TResult Function(String output)? progress,
@@ -1231,6 +1654,8 @@ class _$ErrorImpl extends _Error {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_Initializing value) initializing,
+    required TResult Function(_InitializationFailed value) initializationFailed,
     required TResult Function(_Idle value) idle,
     required TResult Function(_Generating value) generating,
     required TResult Function(_Progress value) progress,
@@ -1243,6 +1668,8 @@ class _$ErrorImpl extends _Error {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initializing value)? initializing,
+    TResult? Function(_InitializationFailed value)? initializationFailed,
     TResult? Function(_Idle value)? idle,
     TResult? Function(_Generating value)? generating,
     TResult? Function(_Progress value)? progress,
@@ -1255,6 +1682,8 @@ class _$ErrorImpl extends _Error {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initializing value)? initializing,
+    TResult Function(_InitializationFailed value)? initializationFailed,
     TResult Function(_Idle value)? idle,
     TResult Function(_Generating value)? generating,
     TResult Function(_Progress value)? progress,
@@ -1269,13 +1698,13 @@ class _$ErrorImpl extends _Error {
   }
 }
 
-abstract class _Error extends GenerationStatus {
+abstract class _Error extends MainScreenState {
   const factory _Error(final String message) = _$ErrorImpl;
   const _Error._() : super._();
 
   String get message;
 
-  /// Create a copy of GenerationStatus
+  /// Create a copy of MainScreenState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>

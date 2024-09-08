@@ -73,14 +73,20 @@ class GenerationConfig with _$GenerationConfig {
 }
 
 @freezed
-class GenerationStatus with _$GenerationStatus {
-  const GenerationStatus._();
+class MainScreenState with _$MainScreenState {
+  const MainScreenState._();
 
-  const factory GenerationStatus.idle() = _Idle;
-  const factory GenerationStatus.generating() = _Generating;
-  const factory GenerationStatus.progress(String output) = _Progress;
-  const factory GenerationStatus.success(String outputFile) = _Success;
-  const factory GenerationStatus.error(String message) = _Error;
+  const factory MainScreenState.initializing() = _Initializing;
+  const factory MainScreenState.initializationFailed({
+    required int exitCode,
+    required String stdout,
+    required String stderr,
+  }) = _InitializationFailed;
+  const factory MainScreenState.idle() = _Idle;
+  const factory MainScreenState.generating() = _Generating;
+  const factory MainScreenState.progress(String output) = _Progress;
+  const factory MainScreenState.success(String outputFile) = _Success;
+  const factory MainScreenState.error(String message) = _Error;
 
   bool get isGenerating => this is _Generating || this is _Progress;
 }

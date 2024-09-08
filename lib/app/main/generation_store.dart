@@ -17,22 +17,36 @@ abstract class _GenerationStore with Store {
 
   final formKey = GlobalKey<FormState>();
 
+  final binaryPathController = TextEditingController();
+  final promptController = TextEditingController();
+
+  _GenerationStore() {
+    config = const GenerationConfig(
+      binaryPath: _binaryPath,
+      prompt: "Asian Boy",
+      model: FluxModel.schnell,
+      output: "image.png",
+      seed: null,
+      size: ImageSize(1024, 1024),
+      steps: 2,
+      guidance: null,
+      quantize: null,
+    );
+    binaryPathController.text = config.binaryPath;
+    promptController.text = config.prompt;
+    locateBinary();
+  }
+
   @observable
-  GenerationConfig config = const GenerationConfig(
-    binaryPath: _binaryPath,
-    prompt: "Asian Boy",
-    model: FluxModel.schnell,
-    output: "image.png",
-    seed: null,
-    size: ImageSize(1024, 1024),
-    steps: 2,
-    guidance: null,
-    quantize: null,
-  );
+  late GenerationConfig config;
 
   @computed
   String get prompt => config.prompt;
-  set prompt(String value) => config = config.copyWith(prompt: value);
+  set prompt(String value) {
+    if (value == config.prompt) return;
+    config = config.copyWith(prompt: value);
+    promptController.text = value;
+  }
 
   final List<DropdownMenuItem<FluxModel>> modelDropdownItems = const [
     DropdownMenuItem<FluxModel>(
@@ -144,13 +158,17 @@ abstract class _GenerationStore with Store {
 
   @computed
   String get binaryPath => config.binaryPath;
-  set binaryPath(String value) => config = config.copyWith(binaryPath: value);
+  set binaryPath(String value) {
+    if (value == config.binaryPath) return;
+    config = config.copyWith(binaryPath: value);
+    binaryPathController.text = value;
+  }
 
   @observable
-  GenerationStatus status = const GenerationStatus.idle();
+  MainScreenState state = const MainScreenState.initializing();
 
   @computed
-  bool get isGenerating => status.isGenerating;
+  bool get isGenerating => state.isGenerating;
 
   @action
   Future<void> tryGenerate() async {
@@ -162,10 +180,10 @@ abstract class _GenerationStore with Store {
 
     void addOutput(String text) {
       output += text;
-      status = GenerationStatus.progress(output);
+      state = MainScreenState.progress(output);
     }
 
-    status = const GenerationStatus.generating();
+    state = const MainScreenState.generating();
 
     formKey.currentState!.save();
 
@@ -195,9 +213,9 @@ abstract class _GenerationStore with Store {
         throw Exception('Could not found output file');
       }
 
-      status = GenerationStatus.success(config.output);
+      state = MainScreenState.success(config.output);
     } catch (e) {
-      status = GenerationStatus.error(e.toString());
+      state = MainScreenState.error(e.toString());
     }
   }
 
@@ -214,5 +232,32 @@ abstract class _GenerationStore with Store {
       return;
     }
     await directory.create();
+  }
+
+  @action
+  Future<void> locateBinary() async {
+    state = const MainScreenState.initializing();
+
+    final process =
+        await Process.run("which", ["mflux-generate"], runInShell: true);
+
+    print(process.exitCode);
+    print(process.stdout);
+    print(process.stderr);
+
+    final binaryPath = process.stdout.toString().trim();
+
+    final file = File(binaryPath);
+
+    if (await file.exists()) {
+      this.binaryPath = binaryPath;
+      state = const MainScreenState.idle();
+    } else {
+      state = MainScreenState.initializationFailed(
+        exitCode: process.exitCode,
+        stdout: process.stdout.toString(),
+        stderr: process.stderr.toString(),
+      );
+    }
   }
 }
