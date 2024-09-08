@@ -43,6 +43,7 @@ dependencies:
   json_annotation: ^4.9.0
   logging: ^1.2.0
   collection: ^1.18.0
+  mobx: ^2.3.3+2
 
 dev_dependencies:
   flutter_test:

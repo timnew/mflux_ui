@@ -5,7 +5,6 @@ linter:
     always_use_package_imports: false # Tend to use relative imports locally and package imports when across features
     sort_unnamed_constructors_first: false # I prefer to have Class._() as the first one
     sort_pub_dependencies: false # I prefer to group the dependencies by functions rather than by name
-    prefer_single_quotes: true
 
 analyzer:
   exclude:
