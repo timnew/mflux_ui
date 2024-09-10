@@ -9,12 +9,13 @@ part of 'generation_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$GenerationStore on _GenerationStore, Store {
-  Computed<String>? _$promptComputed;
+  Computed<GenerationOptions>? _$optionsComputed;
 
   @override
-  String get prompt => (_$promptComputed ??=
-          Computed<String>(() => super.prompt, name: '_GenerationStore.prompt'))
-      .value;
+  GenerationOptions get options =>
+      (_$optionsComputed ??= Computed<GenerationOptions>(() => super.options,
+              name: '_GenerationStore.options'))
+          .value;
   Computed<FluxModel>? _$modelComputed;
 
   @override
@@ -73,13 +74,6 @@ mixin _$GenerationStore on _GenerationStore, Store {
       (_$quantizeComputed ??= Computed<int?>(() => super.quantize,
               name: '_GenerationStore.quantize'))
           .value;
-  Computed<String>? _$binaryPathComputed;
-
-  @override
-  String get binaryPath =>
-      (_$binaryPathComputed ??= Computed<String>(() => super.binaryPath,
-              name: '_GenerationStore.binaryPath'))
-          .value;
   Computed<bool>? _$isGeneratingComputed;
 
   @override
@@ -88,23 +82,51 @@ mixin _$GenerationStore on _GenerationStore, Store {
               name: '_GenerationStore.isGenerating'))
           .value;
 
-  late final _$configAtom =
-      Atom(name: '_GenerationStore.config', context: context);
+  late final _$promptAtom =
+      Atom(name: '_GenerationStore.prompt', context: context);
 
   @override
-  GenerationConfig get config {
-    _$configAtom.reportRead();
-    return super.config;
+  String get prompt {
+    _$promptAtom.reportRead();
+    return super.prompt;
   }
 
-  bool _configIsInitialized = false;
+  @override
+  set prompt(String value) {
+    _$promptAtom.reportWrite(value, super.prompt, () {
+      super.prompt = value;
+    });
+  }
+
+  late final _$binaryPathAtom =
+      Atom(name: '_GenerationStore.binaryPath', context: context);
 
   @override
-  set config(GenerationConfig value) {
-    _$configAtom.reportWrite(value, _configIsInitialized ? super.config : null,
-        () {
-      super.config = value;
-      _configIsInitialized = true;
+  String get binaryPath {
+    _$binaryPathAtom.reportRead();
+    return super.binaryPath;
+  }
+
+  @override
+  set binaryPath(String value) {
+    _$binaryPathAtom.reportWrite(value, super.binaryPath, () {
+      super.binaryPath = value;
+    });
+  }
+
+  late final _$stateAtom =
+      Atom(name: '_GenerationStore.state', context: context);
+
+  @override
+  MainScreenState get state {
+    _$stateAtom.reportRead();
+    return super.state;
+  }
+
+  @override
+  set state(MainScreenState value) {
+    _$stateAtom.reportWrite(value, super.state, () {
+      super.state = value;
     });
   }
 
@@ -140,20 +162,20 @@ mixin _$GenerationStore on _GenerationStore, Store {
     });
   }
 
-  late final _$stateAtom =
-      Atom(name: '_GenerationStore.state', context: context);
+  late final _$tryLocateBinaryAsyncAction =
+      AsyncAction('_GenerationStore.tryLocateBinary', context: context);
 
   @override
-  MainScreenState get state {
-    _$stateAtom.reportRead();
-    return super.state;
+  Future<void> tryLocateBinary() {
+    return _$tryLocateBinaryAsyncAction.run(() => super.tryLocateBinary());
   }
 
+  late final _$refinePromptAsyncAction =
+      AsyncAction('_GenerationStore.refinePrompt', context: context);
+
   @override
-  set state(MainScreenState value) {
-    _$stateAtom.reportWrite(value, super.state, () {
-      super.state = value;
-    });
+  Future<void> refinePrompt() {
+    return _$refinePromptAsyncAction.run(() => super.refinePrompt());
   }
 
   late final _$tryGenerateAsyncAction =
@@ -162,23 +184,6 @@ mixin _$GenerationStore on _GenerationStore, Store {
   @override
   Future<void> tryGenerate() {
     return _$tryGenerateAsyncAction.run(() => super.tryGenerate());
-  }
-
-  late final _$locateBinaryAsyncAction =
-      AsyncAction('_GenerationStore.locateBinary', context: context);
-
-  @override
-  Future<void> locateBinary() {
-    return _$locateBinaryAsyncAction.run(() => super.locateBinary());
-  }
-
-  late final _$verifyBinaryLocationAsyncAction =
-      AsyncAction('_GenerationStore.verifyBinaryLocation', context: context);
-
-  @override
-  Future<bool> verifyBinaryLocation(String binaryPath) {
-    return _$verifyBinaryLocationAsyncAction
-        .run(() => super.verifyBinaryLocation(binaryPath));
   }
 
   late final _$_GenerationStoreActionController =
@@ -198,11 +203,12 @@ mixin _$GenerationStore on _GenerationStore, Store {
   @override
   String toString() {
     return '''
-config: ${config},
+prompt: ${prompt},
+binaryPath: ${binaryPath},
+state: ${state},
 minStep: ${minStep},
 maxStep: ${maxStep},
-state: ${state},
-prompt: ${prompt},
+options: ${options},
 model: ${model},
 seed: ${seed},
 size: ${size},
@@ -212,7 +218,6 @@ stepDivisions: ${stepDivisions},
 steps: ${steps},
 guidance: ${guidance},
 quantize: ${quantize},
-binaryPath: ${binaryPath},
 isGenerating: ${isGenerating}
     ''';
   }

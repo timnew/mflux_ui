@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:gap/gap.dart';
+import 'package:mfluxui/features/find_service.dart';
+import 'package:mfluxui/features/generation.dart';
 import 'package:mobx/mobx.dart';
 import 'package:provider/provider.dart';
 
-import 'generation_config.dart';
 import 'generation_store.dart';
 
 class MainScreen extends StatefulWidget {
@@ -23,7 +24,11 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
-    _store = GenerationStore();
+    _store = GenerationStore(
+      findService(),
+      findService(),
+      findService(),
+    );
 
     reaction(
       (_) => _store.state,
@@ -59,12 +64,15 @@ class _MainScreenState extends State<MainScreen> {
                     Observer(
                       builder: (_) => _store.state.maybeWhen(
                         progress: (output) => _PanelContainer(
+                          flex: 2,
                           child: _OutputMessage(message: output),
                         ),
                         success: (fileName) => _PanelContainer(
+                          flex: 2,
                           child: _ImagePreview(fileName: fileName),
                         ),
                         error: (message) => _PanelContainer(
+                          flex: 2,
                           child: _OutputMessage(message: message),
                         ),
                         orElse: () => const SizedBox.shrink(),
@@ -115,7 +123,8 @@ class _InitializationFailedPanel extends StatelessWidget {
             ),
             const Gap(32),
             TextButton(
-              onPressed: () => context.read<GenerationStore>().locateBinary(),
+              onPressed: () =>
+                  context.read<GenerationStore>().tryLocateBinary(),
               child: const Text("Try again"),
             ),
           ],
@@ -237,6 +246,8 @@ class _Form extends StatelessWidget {
               bindings: {
                 const SingleActivator(LogicalKeyboardKey.enter, control: true):
                     store.tryGenerate,
+                const SingleActivator(LogicalKeyboardKey.enter, shift: true):
+                    store.refinePrompt,
               },
               child: TextFormField(
                 decoration: const InputDecoration(
@@ -252,13 +263,22 @@ class _Form extends StatelessWidget {
               ),
             ),
             const Gap(32),
-            Observer(
-              builder: (_) => FilledButton.tonal(
-                onPressed: store.isGenerating ? null : store.tryGenerate,
-                child: store.isGenerating
-                    ? const CircularProgressIndicator()
-                    : const Text('Generate Image'),
-              ),
+            Row(
+              children: [
+                Observer(
+                  builder: (_) => FilledButton.tonal(
+                    onPressed: store.isGenerating ? null : store.refinePrompt,
+                    child: const Text('Refine (⇧Enter)'),
+                  ),
+                ),
+                const Gap(16),
+                Observer(
+                  builder: (_) => FilledButton(
+                    onPressed: store.isGenerating ? null : store.tryGenerate,
+                    child: const Text('Generate (^Enter)'),
+                  ),
+                ),
+              ],
             ),
           ],
         ),
@@ -267,11 +287,13 @@ class _Form extends StatelessWidget {
 
 class _PanelContainer extends StatelessWidget {
   final Widget child;
+  final int flex;
 
-  const _PanelContainer({required this.child});
+  const _PanelContainer({required this.child, this.flex = 1});
 
   @override
   Widget build(BuildContext context) => Flexible(
+        flex: flex,
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: child,
