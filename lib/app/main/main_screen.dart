@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:gap/gap.dart';
 import 'package:mobx/mobx.dart';
@@ -42,9 +43,6 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) => Provider.value(
         value: _store,
         child: Scaffold(
-          appBar: AppBar(
-            title: const Text("MFlux UI"),
-          ),
           body: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Observer(
@@ -133,7 +131,7 @@ class _Form extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Form(
         key: store.formKey,
-        child: Column(
+        child: ListView(
           children: [
             TextFormField(
               decoration: const InputDecoration(
@@ -235,17 +233,23 @@ class _Form extends StatelessWidget {
               ),
             ),
             const Gap(16),
-            TextFormField(
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Prompt',
+            CallbackShortcuts(
+              bindings: {
+                const SingleActivator(LogicalKeyboardKey.enter, control: true):
+                    store.tryGenerate,
+              },
+              child: TextFormField(
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Prompt',
+                ),
+                minLines: 5,
+                maxLines: 10,
+                controller: store.promptController,
+                validator: (value) =>
+                    (value?.isEmpty ?? true) ? 'Please enter a prompt' : null,
+                onSaved: (value) => store.prompt = value!,
               ),
-              minLines: 5,
-              maxLines: 10,
-              controller: store.promptController,
-              validator: (value) =>
-                  (value?.isEmpty ?? true) ? 'Please enter a prompt' : null,
-              onSaved: (value) => store.prompt = value!,
             ),
             const Gap(32),
             Observer(
