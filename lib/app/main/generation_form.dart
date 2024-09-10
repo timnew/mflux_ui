@@ -20,6 +20,7 @@ class GenerationForm extends StatelessWidget {
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'Binary Path',
+                floatingLabelBehavior: FloatingLabelBehavior.always,
               ),
               controller: store.binaryPathController,
               validator: (value) => (value?.isEmpty ?? true)
@@ -34,6 +35,7 @@ class GenerationForm extends StatelessWidget {
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Model',
+                  floatingLabelBehavior: FloatingLabelBehavior.always,
                 ),
                 items: store.modelDropdownItems,
                 onChanged: (value) => store.model = value!,
@@ -44,6 +46,7 @@ class GenerationForm extends StatelessWidget {
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'Seed',
+                floatingLabelBehavior: FloatingLabelBehavior.always,
                 hintText: "Random seed used for generation",
               ),
               initialValue: store.seed?.toString(),
@@ -62,6 +65,7 @@ class GenerationForm extends StatelessWidget {
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Size',
+                  floatingLabelBehavior: FloatingLabelBehavior.always,
                 ),
                 items: store.sizeDropdownItems,
                 onChanged: (value) => store.size = value!,
@@ -73,6 +77,7 @@ class GenerationForm extends StatelessWidget {
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Steps',
+                  floatingLabelBehavior: FloatingLabelBehavior.always,
                 ),
                 child: Row(
                   children: [
@@ -96,6 +101,7 @@ class GenerationForm extends StatelessWidget {
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'Guidance',
+                floatingLabelBehavior: FloatingLabelBehavior.always,
                 hintText: "Only used by Dev, default to 3.5",
               ),
               enabled: store.model == FluxModel.dev,
@@ -110,6 +116,7 @@ class GenerationForm extends StatelessWidget {
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Quantize',
+                  floatingLabelBehavior: FloatingLabelBehavior.always,
                 ),
                 items: store.quantizeDropdownItems,
                 onChanged: (value) => store.quantize = value,
@@ -127,6 +134,7 @@ class GenerationForm extends StatelessWidget {
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Prompt',
+                  floatingLabelBehavior: FloatingLabelBehavior.always,
                 ),
                 minLines: 5,
                 maxLines: 10,
@@ -141,7 +149,9 @@ class GenerationForm extends StatelessWidget {
               children: [
                 Observer(
                   builder: (_) => FilledButton.tonal(
-                    onPressed: store.isGenerating ? null : store.refinePrompt,
+                    onPressed: store.isGenerating || store.oaiSettingsIsNone
+                        ? null
+                        : store.refinePrompt,
                     child: const Text('Refine (⇧Enter)'),
                   ),
                 ),

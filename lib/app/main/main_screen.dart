@@ -1,11 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:gap/gap.dart';
 import 'package:mfluxui/features/find_service.dart';
-import 'package:mfluxui/features/generation.dart';
 import 'package:mobx/mobx.dart';
 import 'package:provider/provider.dart';
 
@@ -26,6 +24,7 @@ class _MainScreenState extends State<MainScreen> {
   void initState() {
     super.initState();
     _store = GenerationStore(
+      findService(),
       findService(),
       findService(),
       findService(),

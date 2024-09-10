@@ -47,6 +47,9 @@ class OpenAiSettings with _$OpenAiSettings {
           "api-key": settings.apiKey,
         },
       );
+
+  bool get isNone => this is _None;
+  bool get isNotNone => !isNone;
 }
 
 typedef OpenAiSettingsPreference = AppPreference<OpenAiSettings>;

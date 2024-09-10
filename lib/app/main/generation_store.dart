@@ -17,6 +17,7 @@ abstract class _GenerationStore with Store {
   final binaryPathController = TextEditingController();
   final promptController = TextEditingController();
 
+  final OpenAiSettingsPreference oaiSettingsPreference;
   final OpenAiRepository oaiRepository;
   final GenerationOptionsPreference optionsPreference;
   final OutputRepository outputRepository;
@@ -31,6 +32,7 @@ abstract class _GenerationStore with Store {
   MainScreenState state = const MainScreenState.initializing();
 
   _GenerationStore(
+    this.oaiSettingsPreference,
     this.outputRepository,
     this.oaiRepository,
     this.optionsPreference,
@@ -68,6 +70,14 @@ abstract class _GenerationStore with Store {
     }
   }
 
+  @computed
+  OpenAiSettings get oaiSettings => oaiSettingsPreference.value;
+  set oaiSettings(OpenAiSettings value) => oaiSettingsPreference.value = value;
+
+  @computed
+  bool get oaiSettingsIsNone => oaiSettings.isNone;
+
+  @computed
   @computed
   GenerationOptions get options => optionsPreference.value;
   set options(GenerationOptions value) => optionsPreference.value = value;

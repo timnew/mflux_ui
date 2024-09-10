@@ -9,6 +9,20 @@ part of 'generation_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$GenerationStore on _GenerationStore, Store {
+  Computed<OpenAiSettings>? _$oaiSettingsComputed;
+
+  @override
+  OpenAiSettings get oaiSettings => (_$oaiSettingsComputed ??=
+          Computed<OpenAiSettings>(() => super.oaiSettings,
+              name: '_GenerationStore.oaiSettings'))
+      .value;
+  Computed<bool>? _$oaiSettingsIsNoneComputed;
+
+  @override
+  bool get oaiSettingsIsNone => (_$oaiSettingsIsNoneComputed ??= Computed<bool>(
+          () => super.oaiSettingsIsNone,
+          name: '_GenerationStore.oaiSettingsIsNone'))
+      .value;
   Computed<GenerationOptions>? _$optionsComputed;
 
   @override
@@ -208,6 +222,8 @@ binaryPath: ${binaryPath},
 state: ${state},
 minStep: ${minStep},
 maxStep: ${maxStep},
+oaiSettings: ${oaiSettings},
+oaiSettingsIsNone: ${oaiSettingsIsNone},
 options: ${options},
 model: ${model},
 seed: ${seed},
